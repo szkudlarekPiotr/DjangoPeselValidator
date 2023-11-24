@@ -3,7 +3,6 @@ from django.views import View
 from .forms import PeselForm, TextForm
 
 
-# TODO: zajac sie text view, napisac testy do pesel
 class TextView(View):
     form_class = TextForm
     template_name = "ZadaniaRekrutacyjne/text_template.html"
@@ -15,7 +14,7 @@ class TextView(View):
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
         if form.is_valid():
-            pass
+            return render(request, self.template_name, {"form": form})
         return render(request, self.template_name, {"form": form})
 
 
@@ -30,5 +29,13 @@ class PeselView(View):
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
         if form.is_valid():
-            return render(request, self.template_name, {"form": form})
+            pesel = form.save()
+            return render(
+                request,
+                self.template_name,
+                {
+                    "validated": True,
+                    "pesel": pesel,
+                },
+            )
         return render(request, self.template_name, {"form": form})

@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from .models import Texts, Pesel
+from .models import Texts, PeselData
 
 
 class TextForm(ModelForm):
@@ -10,5 +10,5 @@ class TextForm(ModelForm):
 
 class PeselForm(ModelForm):
     class Meta:
-        model = Pesel
+        model = PeselData
         fields = ["pesel_number"]

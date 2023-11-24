@@ -9,11 +9,17 @@
 </head>
 <body>
     <div class="form_div">
+        {% if validated is None %}
         <form action="" method="post">
             {% csrf_token %}
             {{ form }}
             <input type="submit" value="Submit">
         </form>
+        {% else %}
+            <p class="pesel_data" id="PESEL_number">{{pesel.pesel_number}}</p>
+            <p class='pesel_data' id="Sex">{{pesel.sex}}</p>
+            <p class="pesel_data" id="Birthdate">{{pesel.birthdate}}</p>
+        {% endif %}
     </div>
 </body>
 </html>
