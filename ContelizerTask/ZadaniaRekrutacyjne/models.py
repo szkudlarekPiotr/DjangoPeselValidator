@@ -1,5 +1,6 @@
 from django.db import models
 from .validators import validate_pesel
+from django.core.validators import MinLengthValidator
 
 
 class Texts(models.Model):
@@ -8,4 +9,6 @@ class Texts(models.Model):
 
 
 class Pesel(models.Model):
-    pesel_number = models.IntegerField(validators=[validate_pesel])
+    pesel_number = models.CharField(
+        max_length=11, validators=[validate_pesel, MinLengthValidator(11)]
+    )

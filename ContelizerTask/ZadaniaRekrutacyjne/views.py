@@ -30,5 +30,6 @@ class PeselView(View):
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
         if form.is_valid():
-            pass
+            print(form.cleaned_data)
+            return render(request, self.template_name, {"form": form})
         return render(request, self.template_name, {"form": form})

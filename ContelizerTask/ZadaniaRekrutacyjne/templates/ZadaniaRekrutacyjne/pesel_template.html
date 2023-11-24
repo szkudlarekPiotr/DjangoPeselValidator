@@ -9,8 +9,11 @@
 </head>
 <body>
     <div class="form_div">
-        {{form}}
-        <input type="submit" name="submit" id="submit">
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="Submit">
+        </form>
     </div>
 </body>
 </html>
