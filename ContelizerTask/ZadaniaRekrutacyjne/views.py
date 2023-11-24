@@ -3,7 +3,7 @@ from django.views import View
 from .forms import PeselForm, TextForm
 
 
-# Create your views here.
+# TODO: zajac sie text view, napisac testy do pesel
 class TextView(View):
     form_class = TextForm
     template_name = "ZadaniaRekrutacyjne/text_template.html"
