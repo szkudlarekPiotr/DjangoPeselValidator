@@ -1,3 +1,4 @@
+import numbers
 from django.core.exceptions import ValidationError
 import datetime
 
@@ -24,7 +25,6 @@ def correct_pesel_date(pesel):
         year += 1900
     try:
         date = datetime.datetime(year=year, month=month, day=day)
-        print(date)
     except ValueError:
         return False
     else:
@@ -43,6 +43,8 @@ def count_pesel_control(pesel):
 
 def validate_pesel(pesel):
     numbers_list = [int(num) for num in pesel]
+    if len(numbers_list) < 11:
+        raise ValidationError("Your PESEL number is too short")
     if count_pesel_control(numbers_list) != numbers_list[-1] or not correct_pesel_date(
         pesel
     ):

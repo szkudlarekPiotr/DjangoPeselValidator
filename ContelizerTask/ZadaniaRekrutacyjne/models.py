@@ -9,6 +9,4 @@ class Texts(models.Model):
 
 
 class Pesel(models.Model):
-    pesel_number = models.CharField(
-        max_length=11, validators=[validate_pesel, MinLengthValidator(11)]
-    )
+    pesel_number = models.CharField(max_length=11, validators=[validate_pesel])
