@@ -23,7 +23,6 @@ class Texts(models.Model):
         shuffled_content = []
         for item in split_content:
             if len(item) > 3:
-                print(item)
                 shuffled_content.append(
                     item[0] + "".join(r.sample(item[1:-1], len(item[1:-1]))) + item[-1],
                 )
