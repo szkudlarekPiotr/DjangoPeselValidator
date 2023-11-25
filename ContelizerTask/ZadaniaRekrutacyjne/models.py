@@ -1,11 +1,39 @@
 from django.db import models
-from .validators import validate_pesel
 import datetime
+from .validators import validate_pesel, correct_pesel_date, validate_file_type
+from .utils import extract_birthadate
+import string
+import random as r
 
 
 class Texts(models.Model):
-    file = models.FileField(upload_to="text_files")
-    scrambled_text = models.CharField(max_length=50)
+    file = models.FileField(upload_to="text_files", validators=[validate_file_type])
+    shuffled_text = models.CharField(null=True)
+
+    @property
+    def get_shuffled_text(self):
+        content = self.file.open().read().decode("utf-8").splitlines()
+        split_content = [
+            k.strip(string.punctuation)
+            for item in content
+            if item
+            for k in item.split(" ")
+            if k
+        ]
+        shuffled_content = []
+        for item in split_content:
+            if len(item) > 3:
+                print(item)
+                shuffled_content.append(
+                    item[0] + "".join(r.sample(item[1:-1], len(item[1:-1]))) + item[-1],
+                )
+            else:
+                shuffled_content.append(item)
+        return " ".join(shuffled_content)
+
+    def save(self, *args, **kwargs):
+        self.shuffled_text = self.get_shuffled_text
+        super(Texts, self).save(*args, **kwargs)
 
 
 class PeselData(models.Model):
@@ -16,28 +44,8 @@ class PeselData(models.Model):
     @property
     def get_birthdate(self):
         pesel = self.pesel_number
-        year = int(pesel[0:2])
-        month = int(pesel[2:4])
-        day = int(pesel[4:6])
-        if month > 80:
-            year += 1800
-            month -= 80
-        elif month > 60:
-            year += 2200
-            month -= 60
-        elif month > 40:
-            year += 2100
-            month -= 40
-        elif month > 20:
-            year += 2000
-            month -= 20
-        else:
-            year += 1900
-        try:
-            date = datetime.date(year=year, month=month, day=day)
-        except ValueError:
-            return False
-        return date
+        birthdate = datetime.date(*extract_birthadate(pesel))
+        return birthdate
 
     @property
     def get_sex(self):

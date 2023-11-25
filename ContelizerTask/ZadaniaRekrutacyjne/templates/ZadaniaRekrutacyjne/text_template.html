@@ -3,14 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PESEL number validator</title>
+    <title>Text file scrambler</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'ZadaniaRekrutacyjne/text_styles.css'%}">
 </head>
 <body>
     <div class="form_div">
-        {{form}}
-        <input type="submit" name="submit" id="submit">
+        {% if shuffled_text is None %}
+        <form action='' method='post' enctype="multipart/form-data">
+            {% csrf_token %}
+            {{form}}
+            <input type="submit" value="Submit">
+        </form>
+        {% else %}
+            <p class="shuffled_text">{{shuffled_text}}</p>
+        {% endif %}
     </div>
 </body>
 </html>

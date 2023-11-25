@@ -1,29 +1,15 @@
 from django.core.exceptions import ValidationError
 import datetime
+import magic
+from .utils import extract_birthadate
 
 WEIGHTS = [1, 3, 7, 9, 1, 3, 7, 9, 1, 3]
 
 
 def correct_pesel_date(pesel):
-    year = int(pesel[0:2])
-    month = int(pesel[2:4])
-    day = int(pesel[4:6])
-    if month > 80:
-        year += 1800
-        month -= 80
-    elif month > 60:
-        year += 2200
-        month -= 60
-    elif month > 40:
-        year += 2100
-        month -= 40
-    elif month > 20:
-        year += 2000
-        month -= 20
-    else:
-        year += 1900
+    year, month, day = extract_birthadate(pesel)
     try:
-        date = datetime.datetime(year=year, month=month, day=day)
+        date = datetime.date(year=year, month=month, day=day)
     except ValueError:
         return False
     else:
@@ -48,3 +34,9 @@ def validate_pesel(pesel):
         pesel
     ):
         raise ValidationError(f"Your PESEL number is invalid.")
+
+
+def validate_file_type(file):
+    filetype = magic.from_buffer(file.read(), mime=True)
+    if not "text/plain" in filetype:
+        raise ValidationError("Invalid file type")

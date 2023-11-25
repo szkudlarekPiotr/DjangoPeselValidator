@@ -12,9 +12,12 @@ class TextView(View):
         return render(request, self.template_name, {"form": form})
 
     def post(self, request, *args, **kwargs):
-        form = self.form_class(request.POST)
+        form = self.form_class(request.POST, request.FILES)
         if form.is_valid():
-            return render(request, self.template_name, {"form": form})
+            data = form.save()
+            return render(
+                request, self.template_name, {"shuffled_text": data.shuffled_text}
+            )
         return render(request, self.template_name, {"form": form})
 
 

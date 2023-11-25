@@ -21,3 +21,8 @@ class SavesValidatedPESEL(TestCase):
     def test_valid_pesel(self):
         form = PeselForm(data=self.valid_pesel)
         self.assertTrue(form.is_valid())
+
+
+class ShufflesUploadedText(TestCase):
+    def setUp(self):
+        self.file = ""
