@@ -4,7 +4,7 @@ WEIGHTS = [1, 3, 7, 9, 1, 3, 7, 9, 1, 3]
 
 
 def correct_pesel_date(pesel):
-    year, month, day = extract_birthadate(pesel)
+    year, month, day = extract_birthdate(pesel)
     try:
         date = datetime.date(year=year, month=month, day=day)
     except ValueError:
@@ -23,7 +23,7 @@ def count_pesel_control(pesel):
     return control_number
 
 
-def extract_birthadate(pesel):
+def extract_birthdate(pesel):
     year = int(pesel[0:2])
     month = int(pesel[2:4])
     day = int(pesel[4:6])

@@ -1,7 +1,7 @@
 from django.db import models
 import datetime
 from .validators import validate_pesel, validate_file_type
-from .utils import extract_birthadate
+from .utils import extract_birthdate
 import string
 import random as r
 
@@ -14,11 +14,11 @@ class Texts(models.Model):
     def get_shuffled_text(self):
         content = self.file.open().read().decode("utf-8").splitlines()
         split_content = [
-            k.strip(string.punctuation)
-            for item in content
-            if item
-            for k in item.split(" ")
-            if k
+            word.strip(string.punctuation)
+            for line in content
+            if line
+            for word in line.split(" ")
+            if word
         ]
         shuffled_content = []
         for item in split_content:
@@ -43,15 +43,13 @@ class PeselData(models.Model):
     @property
     def get_birthdate(self):
         pesel = self.pesel_number
-        birthdate = datetime.date(*extract_birthadate(pesel))
+        birthdate = datetime.date(*extract_birthdate(pesel))
         return birthdate
 
     @property
     def get_sex(self):
         pesel = self.pesel_number
-        if int(pesel[-2]) % 2 == 0:
-            return "female"
-        return "male"
+        return "female" if int(pesel[-2]) % 2 == 0 else "male"
 
     def save(self, *args, **kwargs):
         self.birthdate = self.get_birthdate

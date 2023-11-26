@@ -10,7 +10,7 @@ def validate_pesel(pesel):
     if count_pesel_control(numbers_list) != numbers_list[-1] or not correct_pesel_date(
         pesel
     ):
-        raise ValidationError(f"Your PESEL number is invalid.")
+        raise ValidationError("Your PESEL number is invalid.")
 
 
 def validate_file_type(file):
