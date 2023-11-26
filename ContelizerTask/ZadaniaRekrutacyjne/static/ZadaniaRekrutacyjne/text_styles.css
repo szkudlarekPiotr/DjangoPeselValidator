@@ -1,11 +1,23 @@
 html, body{
     display: flex;
+    height: 100%;
     flex-direction: column;   
 }
 
 .form_div{
+    margin:auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    font-family: 'Inter', sans-serif;
+}
+
+.text_form{
+    display: flex;
+    flex-direction: column;
+}
+
+.text_form input{
+    margin-top:5px
 }

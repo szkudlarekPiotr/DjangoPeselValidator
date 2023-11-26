@@ -1,6 +1,6 @@
 from django.db import models
 import datetime
-from .validators import validate_pesel, correct_pesel_date, validate_file_type
+from .validators import validate_pesel, validate_file_type
 from .utils import extract_birthadate
 import string
 import random as r

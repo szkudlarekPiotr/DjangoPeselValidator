@@ -1,29 +1,6 @@
 from django.core.exceptions import ValidationError
-import datetime
 import magic
-from .utils import extract_birthadate
-
-WEIGHTS = [1, 3, 7, 9, 1, 3, 7, 9, 1, 3]
-
-
-def correct_pesel_date(pesel):
-    year, month, day = extract_birthadate(pesel)
-    try:
-        date = datetime.date(year=year, month=month, day=day)
-    except ValueError:
-        return False
-    else:
-        return True
-
-
-def count_pesel_control(pesel):
-    multiplied_pesel = []
-    for x in range(0, len(WEIGHTS)):
-        multiplied_pesel.append(pesel[x] * WEIGHTS[x])
-    stripped_weights = [num % 10 if num > 10 else num for num in multiplied_pesel]
-    if sum(stripped_weights) > 10:
-        control_number = 10 - sum(stripped_weights) % 10
-    return control_number
+from .utils import correct_pesel_date, count_pesel_control
 
 
 def validate_pesel(pesel):

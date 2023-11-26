@@ -4,20 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PESEL number validator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300&display=swap" rel="stylesheet">
     {% load static %}
     <link rel="stylesheet" href="{% static 'ZadaniaRekrutacyjne/pesel_styles.css'%}">
 </head>
 <body>
     <div class="form_div">
         {% if validated is None %}
-        <form action="" method="post">
+        <form class="pesel_form" action="" method="post">
             {% csrf_token %}
             {{ form }}
             <input type="submit" value="Submit">
         </form>
         {% else %}
             <p class="pesel_data" id="PESEL_number">{{pesel.pesel_number}}</p>
-            <p class='pesel_data' id="Sex">{{pesel.sex}}</p>
+            <p class="pesel_data" id="Sex">{{pesel.sex}}</p>
             <p class="pesel_data" id="Birthdate">{{pesel.birthdate}}</p>
         {% endif %}
     </div>
