@@ -5,7 +5,7 @@ from .forms import PeselForm, TextForm
 
 class TextView(View):
     form_class = TextForm
-    template_name = "ZadaniaRekrutacyjne/text_template.html"
+    template_name = "ShuffleValidate/text_template.html"
 
     def get(self, request, *args, **kwargs):
         form = self.form_class()
@@ -23,7 +23,7 @@ class TextView(View):
 
 class PeselView(View):
     form_class = PeselForm
-    template_name = "ZadaniaRekrutacyjne/pesel_template.html"
+    template_name = "ShuffleValidate/pesel_template.html"
 
     def get(self, request, *args, **kwargs):
         form = self.form_class()
